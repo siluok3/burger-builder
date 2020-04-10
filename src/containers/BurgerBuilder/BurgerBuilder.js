@@ -19,7 +19,21 @@ class BurgerBuilder extends React.Component {
       meat: 0,
     },
     totalPrice: 4,
+    purchaseable: false,
   };
+
+  //Disable Checkout button when no ingredients are selected
+  updatePurchaseState(ingredients) {
+    const ingredientsSum = Object.keys(ingredients)
+      .map(key => {
+        return ingredients[key]
+      })
+      .reduce((sum, el) => {
+        return sum + el;
+      }, 0);
+      
+    this.setState({purchaseable: ingredientsSum > 0});
+  } 
 
   addIngredientHandler = type => {
     const oldCount = this.state.ingredients[type];
@@ -37,6 +51,7 @@ class BurgerBuilder extends React.Component {
       ingredients: updatedIngredients,
       totalPrice: newPrice
     });
+    this.updatePurchaseState(updatedIngredients);
   }
 
   removeIgredientHandler = type => {
@@ -58,6 +73,7 @@ class BurgerBuilder extends React.Component {
       ingredients: updatedIngredients,
       totalPrice: newPrice
     });
+    this.updatePurchaseState(updatedIngredients);
   }
 
   render() {
@@ -75,6 +91,8 @@ class BurgerBuilder extends React.Component {
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIgredientHandler}
           disabled={disabledInfo}
+          price={this.state.totalPrice}
+          purchaseable={this.state.purchaseable}
         />
       </React.Fragment>
     );
