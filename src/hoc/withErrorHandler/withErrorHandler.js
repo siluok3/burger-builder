@@ -8,7 +8,8 @@ const withErrorHandler = (WrappedComponent, axios) => {
       error: null,
     }
 
-    componentDidMount() {
+    //TODO Deprecated: fix it with hooks and useEffect
+    componentWillMount() {
       axios.interceptors.request.use(req => {
         this.setState({ error: null });
         return req;

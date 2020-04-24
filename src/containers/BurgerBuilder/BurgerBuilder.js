@@ -22,13 +22,16 @@ class BurgerBuilder extends React.Component {
     purchaseable: false,
     purchasing: false,
     loading: false,
+    error: false,
   };
 
   componentDidMount() {
     axios.get('https://burger-builder-d1632.firebaseio.com/ingredients.json')
       .then(response => {
         this.setState({ingredients: response.data});
-      });
+      })
+      .catch(error => 
+        this.setState({error: true}));
   }
 
   //Disable Checkout button when no ingredients are selected
@@ -128,7 +131,7 @@ class BurgerBuilder extends React.Component {
     }
     
     let orderSummary = null;
-    let burger = <Spinner />;
+    let burger = this.state.error ? <p>Ingredients couldn't be fetched</p> : <Spinner />;
     if (this.state.ingredients){
       burger = (
         <React.Fragment>
