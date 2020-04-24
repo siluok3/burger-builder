@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Logo from '../../Layout/Logo/Logo';
+import Logo from '../../../hoc/Layout/Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 
